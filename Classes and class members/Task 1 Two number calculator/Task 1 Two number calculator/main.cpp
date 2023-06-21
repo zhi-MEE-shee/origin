@@ -15,6 +15,8 @@ public:
 			return true;
 		}
 		else
+
+			cout << "Неверный ввод!\n";
 			return false;
 	}
 
@@ -24,6 +26,7 @@ public:
 			return true;
 		}
 		else
+			cout << "Неверный ввод!\n";
 			return false;
 	}
 
@@ -49,21 +52,21 @@ void print_Calc(Calculator& num3) {
 
 void asking_for_nums(int& x, int& y, Calculator& pair) {
 
-
-	cout << "Введите num1: ";
-	cin >> x;
-	cout << "Введите num2: ";
-	cin >> y;
-
-
-	if (pair.set_num1(x) == false || pair.set_num2(y) == false)
+	do
 	{
-		cout << "Неверный ввод!\n";
-	}
-	else
+		cout << "Введите num1: ";
+		cin >> x;
+
+	} while (pair.set_num1(x) == false);
+	
+	do
 	{
-		print_Calc(pair);
-	}
+		cout << "Введите num2: ";
+		cin >> y;
+
+	} while (pair.set_num2(y) == false);
+
+	print_Calc(pair);
 
 	asking_for_nums(x, y, pair);
 }

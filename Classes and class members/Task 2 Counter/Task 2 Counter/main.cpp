@@ -24,8 +24,8 @@ public:
 			this->num = num;
 		}
 	}
-	int NumPlus() { return num++; }
-	int NumMinus() { return num--; }
+	int NumPlus() { return ++num; }
+	int NumMinus() { return --num; }
 
 
 };
