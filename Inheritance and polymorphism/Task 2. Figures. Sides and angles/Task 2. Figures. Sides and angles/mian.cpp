@@ -10,7 +10,9 @@ protected:
 	
 	string name;
 	virtual string getName() { return "Фигура"; }
-
+	
+public:
+	virtual void print() {};
 };
 
 class Triangle : public Figure
@@ -74,12 +76,12 @@ public:
 	int getAngle_C() { return C; }
 
 	string getNameForOutput() { return name; }
-	//вынесла в отдельную функцию
-	//void print() {
-	//	cout << name << ": " << endl
-	//		<< "Стороны: a = " << getSide_a() << ", b = " << getSide_b() << ", c = " << getSide_c() << endl
-	//		<< "Углы: A = " << getAngle_A() << ", B = " << getAngle_B() << ", C = " << getAngle_C() << endl << endl;
-	//}
+	
+	void print() override {
+		cout << name << ": " << endl
+			<< "Стороны: a = " << getSide_a() << ", b = " << getSide_b() << ", c = " << getSide_c() << endl
+			<< "Углы: A = " << getAngle_A() << ", B = " << getAngle_B() << ", C = " << getAngle_C() << endl << endl;
+	}
 };
 
 class RightTriangle : public Triangle
@@ -162,7 +164,7 @@ public:
 	int getAngle_C() { return C; }
 	int getAngle_D() { return D; }
 
-	void print() {
+	void print() override {
 		cout << name << ": " << endl
 			<< "Стороны: a = " << getSide_a() << ", b = " << getSide_b() << ", c = " << getSide_c() << ", d = " << getSide_d() << endl
 			<< "Углы: A = " << getAngle_A() << ", B = " << getAngle_B() << ", C = " << getAngle_C() << ", D = " << getAngle_D() << endl << endl;
@@ -244,11 +246,8 @@ public:
 };
 
 
-void print_info(Triangle* obj) {
-	cout << obj->getNameForOutput() << ": " << endl
-		<< "Стороны: a = " << obj->getSide_a() << ", b = " << obj->getSide_b() << ", c = " << obj->getSide_c() << endl
-		<< "Углы: A = " << obj->getAngle_A() << ", B = " << obj->getAngle_B() << ", C = " << obj->getAngle_C() << endl << endl;
-
+void print_info(Figure* obj) {
+	obj->print();
 }
 
 
@@ -260,25 +259,31 @@ int main() {
 
 	
 	Triangle obj1;
-	RightTriangle obj2;
-	IsoscelesTriangle obj3;
-	EquilateralTriangle obj4;
 	print_info(&obj1);
+
+	RightTriangle obj2;
 	print_info(&obj2);
+
+	IsoscelesTriangle obj3;
 	print_info(&obj3);
+
+	EquilateralTriangle obj4;
 	print_info(&obj4);
 
 	Quadrangle obj5;
-	Parallelogram obj6;
-	Rectangle_ obj7;
-	Rhombus obj8;
-	Square obj9;
-	obj5.print();
-	obj6.print();
-	obj7.print();
-	obj8.print();
-	obj9.print();
+	print_info(&obj5);
 
+	Parallelogram obj6;
+	print_info(&obj6);
+
+	Rectangle_ obj7;
+	print_info(&obj7);
+
+	Rhombus obj8;
+	print_info(&obj8);
+
+	Square obj9;
+	print_info(&obj9);
 
 	return 0;
 }
