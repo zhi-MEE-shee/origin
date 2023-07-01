@@ -37,7 +37,6 @@ public:
 
 	}
 
-
 };
 
 class Triangle : public Figure
@@ -121,6 +120,7 @@ class RightTriangle : public Triangle
 protected:
 	string getName() override { return "Прямой треугольник"; }
 	bool check() override {
+		Triangle::check();
 		return C == 90 ? true : false;
 	}
 
@@ -136,6 +136,7 @@ protected:
 	string getName() override { return "Равнобедренный треугольник"; }
 
 	bool check() override {
+		Triangle::check();
 		return A == C && a == c ? true : false;
 	}
 
@@ -151,6 +152,7 @@ protected:
 	string getName() override { return "Равносторонний треугольник"; }
 
 	bool check() override {
+		Triangle::check();
 		return A == C && A == B && a == c && a == b? true : false;
 	}
 
@@ -232,6 +234,7 @@ protected:
 	string getName() override { return "Параллелограмм"; }
 
 	bool check() override {
+		Quadrangle::check();
 		return A == C && B == D && a == c && b == d ? true : false;
 	}
 
@@ -269,6 +272,7 @@ protected:
 	string getName() override { return "Прямоугольник"; }
 
 	bool check() override {
+		Quadrangle::check();
 		return a == c && b == d && A == 90 && A == B && B == C && C == D ? true : false;
 	}
 
@@ -291,6 +295,7 @@ class Square : public Quadrangle
 protected:
 	string getName() override { return "Квадрат"; }
 	bool check() override {
+		Quadrangle::check();
 		return a == c && b == d && a == b && A == 90 && A == B && B == C && C == D ? true : false;
 	}
 public:
@@ -306,6 +311,7 @@ protected:
 	string getName() override { return "Ромб"; }
 
 	bool check() override {
+		Quadrangle::check();
 		return a == c && b == d && a == b && A == C && B == D ? true : false;
 	}
 
