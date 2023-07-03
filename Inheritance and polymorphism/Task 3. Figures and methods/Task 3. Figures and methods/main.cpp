@@ -120,8 +120,8 @@ class RightTriangle : public Triangle
 protected:
 	string getName() override { return "Прямой треугольник"; }
 	bool check() override {
-		Triangle::check();
-		return C == 90 ? true : false;
+		if (Triangle::check() == false || C != 90) { return false; }
+		else return true;
 	}
 
 public:
@@ -136,8 +136,8 @@ protected:
 	string getName() override { return "Равнобедренный треугольник"; }
 
 	bool check() override {
-		Triangle::check();
-		return A == C && a == c ? true : false;
+		if ( Triangle::check() == false || (A != C && a != c) ) { return false; }
+		else return true;
 	}
 
 public:
@@ -152,8 +152,8 @@ protected:
 	string getName() override { return "Равносторонний треугольник"; }
 
 	bool check() override {
-		Triangle::check();
-		return A == C && A == B && a == c && a == b? true : false;
+		if (Triangle::check() == false || (A != C && A != B && a != c && a != b)) { return false; }
+		else return true;
 	}
 
 public:
@@ -234,8 +234,8 @@ protected:
 	string getName() override { return "Параллелограмм"; }
 
 	bool check() override {
-		Quadrangle::check();
-		return A == C && B == D && a == c && b == d ? true : false;
+		if ( Quadrangle::check() == false || (A != C && B != D && a != c && b != d) ) { return false; }
+		else return true;
 	}
 
 	////конструктор прямоугольника
@@ -272,8 +272,8 @@ protected:
 	string getName() override { return "Прямоугольник"; }
 
 	bool check() override {
-		Quadrangle::check();
-		return a == c && b == d && A == 90 && A == B && B == C && C == D ? true : false;
+		if ( Quadrangle::check() == false || (a != c && b != d && A != 90 && A != B && B != C && C != D) ) { return false; }
+		else return true;
 	}
 
 	//конструктор квадрата
@@ -295,8 +295,8 @@ class Square : public Quadrangle
 protected:
 	string getName() override { return "Квадрат"; }
 	bool check() override {
-		Quadrangle::check();
-		return a == c && b == d && a == b && A == 90 && A == B && B == C && C == D ? true : false;
+		if ( Quadrangle::check() == false || (a != c && b != d && a != b && A != 90 && A != B && B != C && C != D) ) { return false; }
+		else return true;
 	}
 public:
 	Square() : Quadrangle(40, 40, 40, 40, 90, 90, 90, 90) {
@@ -311,8 +311,8 @@ protected:
 	string getName() override { return "Ромб"; }
 
 	bool check() override {
-		Quadrangle::check();
-		return a == c && b == d && a == b && A == C && B == D ? true : false;
+		if ( Quadrangle::check() == false || (a != c && b != d && a != b && A != C && B != D) ) { return false; }
+		else return true;
 	}
 
 public:
