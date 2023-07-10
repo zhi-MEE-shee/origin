@@ -8,8 +8,15 @@ class Figure
 {
 protected:
 	string name;
+	int quantOfSides;
+
+	Figure(int sides);
+
 	virtual string getName();
+	int getQuantOfSides();
+//	virtual bool check();
 
 public:
-	virtual void print();
+	Figure();
+	virtual void print_info();
 };

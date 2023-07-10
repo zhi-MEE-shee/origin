@@ -4,6 +4,7 @@
 
 	//конструктор произвольного треугольника
 	Triangle::Triangle(int a, int b, int c, int A, int B, int C) {
+
 		this->a = a;
 		this->b = b;
 		this->c = c;
