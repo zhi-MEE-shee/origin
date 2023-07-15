@@ -1,0 +1,3 @@
+G:/Netology homeworks/CMake/Task 1 A simplest project/out/build/x64-Debug/CMakeFiles/my_first_cmake_program.dir
+G:/Netology homeworks/CMake/Task 1 A simplest project/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+G:/Netology homeworks/CMake/Task 1 A simplest project/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
