@@ -1,0 +1,3 @@
+G:/Netology homeworks/CMake/Task 2 and a little bit more complicated/out/build/x64-Debug/CMakeFiles/Task2.dir
+G:/Netology homeworks/CMake/Task 2 and a little bit more complicated/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+G:/Netology homeworks/CMake/Task 2 and a little bit more complicated/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
