@@ -1,5 +1,8 @@
 #include <iostream>
+#include <limits>
 #include <Windows.h>
+//#undef min
+#undef max
 
 using namespace std;
 
@@ -22,25 +25,21 @@ public:
 	}
 
 	Fraction& operator++() {
-		++numerator_;
-		++denominator_;
+		numerator_ += denominator_;
 		return *this;
 	}
 	Fraction& operator--() {
-		--numerator_;
-		--denominator_;
+		numerator_ -= denominator_;
 		return *this;
 	}
 
 	Fraction& operator++(int) {
-		Fraction fraction = *this;
-		++(*this);
-		return fraction;
+		numerator_ += denominator_;
+		return *this;
 	}
 	Fraction& operator--(int) {
-		Fraction fraction = *this;
-		--(*this);
-		return fraction;
+		numerator_ -= denominator_;
+		return *this;
 	}
 
 	Fraction operator+ () const {
@@ -48,9 +47,8 @@ public:
 	}
 	
 	Fraction operator- () const {
-			return Fraction{ -numerator_, -denominator_ };
+			return Fraction{ -numerator_, denominator_ };
 	}
-
 
 
 	friend ostream& operator<< (ostream& out, const Fraction& fraction);
@@ -64,17 +62,33 @@ public:
 //		return  Fraction(numerator_ + f2.numerator_, denominator_ + f2.denominator_);
 //	}
 	Fraction operator+ (Fraction other) {
-		return  Fraction(numerator_ + other.numerator_, denominator_ + other.denominator_);
+		Fraction tmp;
+		tmp.numerator_ = (numerator_ * other.denominator_ + other.numerator_ * denominator_);
+		tmp.denominator_ = (denominator_ * other.denominator_);
+		tmp.fractionReduction();
+		return tmp;
 	}
 	Fraction operator- ( Fraction other) {
-		return  Fraction(numerator_ - other.numerator_, denominator_ - other.denominator_);
+		Fraction tmp;
+		tmp.numerator_ = (numerator_ * other.denominator_ - other.numerator_ * denominator_);
+		tmp.denominator_ = (denominator_ * other.denominator_);
+		tmp.fractionReduction();
+		return tmp;
 	}
 
 	Fraction operator* (Fraction other) {
-		return  Fraction(numerator_ * other.numerator_, denominator_ * other.denominator_);
+		Fraction tmp;
+		tmp.numerator_ = numerator_ * other.numerator_;
+		tmp.denominator_ = denominator_ * other.denominator_;
+		tmp.fractionReduction();
+		return tmp;
 	}
 	Fraction operator/ ( Fraction other) {
-		return  Fraction{numerator_ * other.denominator_, denominator_ * other.numerator_ };
+		Fraction tmp;
+		tmp.numerator_ = numerator_ * other.denominator_;
+		tmp.denominator_ = denominator_ * other.numerator_;
+		tmp.fractionReduction();
+		return tmp;
 	}
 	//ищем общий делитель
 	int commonDivisor(int numerator_, int denominator_) {
@@ -98,9 +112,10 @@ ostream& operator<< (ostream& out, const Fraction& fraction) {
 }
 
 istream& operator>> (istream& in, Fraction& fraction) {
-	cout << "¬ведите числитель дроби: ";
+	
 	in >> fraction.numerator_;
-	cout << "¬ведите знаменатель дроби: ";
+	//игнорирует знак "/". ѕри объ€вленном <Windows.h> необходимо убрать определение макроса max
+	in.ignore(std::numeric_limits<std::streamsize>::max(), '/');  
 	in >> fraction.denominator_;
 
 	fraction.fractionReduction();
@@ -120,6 +135,11 @@ Fraction operator/ (Fraction& f1, Fraction& f2) {
 	return Fraction{ f1.numerator_ * f2.denominator_, f1.denominator_ * f2.numerator_ };
 }*/
 
+void print_asking(int i) {
+	cout << "¬ведите значение " << i  << " дроби: ";
+}
+
+
 
 int main()
 {
@@ -129,7 +149,12 @@ int main()
 
 	Fraction f1{};
 	Fraction f2{};
+	int ordinal_f1{ 1 };
+	int ordinal_f2{ 2 };
+
+	print_asking(ordinal_f1);
 	cin >> f1;
+	print_asking(ordinal_f2);
 	cin >> f2;
 	
 
