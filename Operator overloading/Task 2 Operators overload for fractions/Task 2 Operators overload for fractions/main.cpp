@@ -33,13 +33,16 @@ public:
 		return *this;
 	}
 
-	Fraction& operator++(int) {
-		numerator_ += denominator_;
-		return *this;
+	Fraction operator++(int) {
+		Fraction fraction = *this;
+		++(*this);
+		return fraction;
 	}
-	Fraction& operator--(int) {
-		numerator_ -= denominator_;
-		return *this;
+
+	Fraction operator--(int) {
+		Fraction fraction = *this;
+		--(*this);
+		return fraction;
 	}
 
 	Fraction operator+ () const {
