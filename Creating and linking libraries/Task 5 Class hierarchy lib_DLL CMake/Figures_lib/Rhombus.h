@@ -1,0 +1,14 @@
+#pragma once
+#include "Parallelogram.h"
+
+namespace Figures {
+
+	FIGURESLIBRARY_API class Rhombus : public Parallelogram
+	{
+	protected:
+		std::string getName() override;
+	public:
+		Rhombus();
+	};
+}
+
