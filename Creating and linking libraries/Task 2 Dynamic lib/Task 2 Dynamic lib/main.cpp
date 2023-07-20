@@ -1,5 +1,4 @@
-
-#include "Greeter.h"
+#include "Farewell.h"
 #include <Windows.h>
 
 
@@ -10,11 +9,11 @@ int main()
 	SetConsoleOutputCP(1251);
 
 	std::string user_name;
-	Greeter greet;
+	Farewell::Leaver leaver;
 	std::cout << "¬ведите им€: ";
 	std::cin >> user_name;
 
-	std::cout << greet.greet(user_name);
+	std::cout << leaver.leave(user_name);
 
 	return 0;
 }
