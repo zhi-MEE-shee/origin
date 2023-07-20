@@ -3,7 +3,7 @@
 
 namespace Figures {
 
-	class Parallelogram : public Quadrangle
+	FIGURESLIBRARY_API class Parallelogram : public Quadrangle
 	{
 	protected:
 		std::string getName() override;

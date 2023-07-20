@@ -3,7 +3,7 @@
 
 namespace Figures {
 
-	class Triangle : public Figure
+	FIGURESLIBRARY_API class Triangle : public Figure
 	{
 	private:
 		//конструктор произвольного треугольника

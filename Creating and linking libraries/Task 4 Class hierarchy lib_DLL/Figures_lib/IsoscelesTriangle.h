@@ -3,7 +3,7 @@
 
 namespace Figures {
 
-	class IsoscelesTriangle : public Triangle
+	FIGURESLIBRARY_API class IsoscelesTriangle : public Triangle
 	{
 	protected:
 		std::string getName() override;

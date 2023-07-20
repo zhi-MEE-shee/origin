@@ -3,7 +3,7 @@
 
 namespace Figures {
 
-	class Square : public Rectangle_
+	FIGURESLIBRARY_API class Square : public Rectangle_
 	{
 	protected:
 		std::string getName() override;
