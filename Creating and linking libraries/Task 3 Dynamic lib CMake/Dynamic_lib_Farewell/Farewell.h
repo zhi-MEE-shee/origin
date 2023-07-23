@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-#ifndef DYNAMIC_LIB_FAREWELL
+#ifdef DYNAMIC_LIB_FAREWELL
 	#define FAREWELL_LIB_API __declspec(dllexport)
 #else
 	#define FAREWELL_LIB_API __declspec(dllimport)

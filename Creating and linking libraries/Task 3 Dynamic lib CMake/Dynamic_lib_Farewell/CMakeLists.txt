@@ -8,3 +8,5 @@ project(Task3_lib)
 set(FAREWELL_DLL Farewell.cpp Farewell.h)
 
 add_library (Farewell_lib SHARED ${FAREWELL_DLL}) 
+target_compile_definitions(Farewell_lib PRIVATE DYNAMIC_LIB_FAREWELL)
+

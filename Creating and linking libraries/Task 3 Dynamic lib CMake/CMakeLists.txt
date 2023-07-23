@@ -7,6 +7,7 @@ project(Task3)
 include_directories(Dynamic_lib_Farewell)
 
 add_executable (Task3 main.cpp)
+
 add_subdirectory(Dynamic_lib_Farewell)
 
 target_link_libraries(Task3 Farewell_lib)
