@@ -3,7 +3,7 @@
 
 namespace Figures {
 
-	FIGURESLIBRARY_API class Quadrangle : public Figure
+	class FIGURESLIBRARY_API Quadrangle : public Figure
 	{
 	private:
 		std::string getName() override;

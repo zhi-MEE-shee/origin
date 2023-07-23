@@ -3,7 +3,7 @@
 
 namespace Figures {
 
-	FIGURESLIBRARY_API class Rhombus : public Parallelogram
+	class FIGURESLIBRARY_API Rhombus : public Parallelogram
 	{
 	protected:
 		std::string getName() override;

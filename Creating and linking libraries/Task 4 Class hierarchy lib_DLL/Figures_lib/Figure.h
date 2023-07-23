@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef FIGURESLIBRARYDYNAMIC
+#ifdef FIGURESLIBRARYDYNAMIC_EXPORTS
 #define FIGURESLIBRARY_API __declspec(dllexport)
 #else
 #define FIGURESLIBRARY_API __declspec(dllimport)
@@ -11,7 +11,7 @@
 
 namespace Figures {
 
-	FIGURESLIBRARY_API class Figure
+	class FIGURESLIBRARY_API Figure
 	{
 	protected:
 		std::string name;
