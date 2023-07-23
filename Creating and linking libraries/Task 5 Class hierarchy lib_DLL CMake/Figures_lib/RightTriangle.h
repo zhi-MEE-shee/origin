@@ -3,7 +3,7 @@
 
 namespace Figures {
 
-	FIGURESLIBRARY_API class RightTriangle : public Triangle
+	class RightTriangle : public Triangle
 	{
 	protected:
 		std::string getName() override;
