@@ -301,7 +301,7 @@ int main() {
 
 		std::cin >> exit;
 
-		delete_race(race_members, vehicles_count);
+		delete[] race_members;
 		delete[] racer;
 		size = 0;
 		vehicles_count = 0;
