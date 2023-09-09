@@ -7,7 +7,7 @@ Carpet::Carpet()
 {
 	name = getName();
 	speed = 10;
-	
+	v_type = Vehicles_type::Air;
 };
 
 double Carpet::getFull_race_time (int race_distance) {
@@ -36,3 +36,5 @@ double Carpet::getReduction_factor (int& distance) {
 }
 
 std::string Carpet::getRace_name() { return name; };
+
+Vehicles_type Carpet::getRace_type() { return v_type; }

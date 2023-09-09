@@ -8,6 +8,7 @@ Speed_camel::Speed_camel()
 	speed = 40;
 	mooving_time = 10;
 	resting_time = 0;
+	v_type = Vehicles_type::Ground;
 }
 
 double Speed_camel::getFull_race_time(int race_distance) {
@@ -34,3 +35,5 @@ double Speed_camel::getFull_race_time(int race_distance) {
 }
 
 std::string Speed_camel::getRace_name() { return name; };
+
+Vehicles_type Speed_camel::getRace_type() { return v_type; }

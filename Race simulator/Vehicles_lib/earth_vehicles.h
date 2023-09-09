@@ -13,4 +13,5 @@ public:
 
 	std::string getRace_name() override;
 	
+	Vehicles_type getRace_type() override;
 };

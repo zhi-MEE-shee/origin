@@ -8,6 +8,8 @@ Boots::Boots()
 	speed = 6;
 	mooving_time = 60;
 	resting_time = 0;
+	v_type = Vehicles_type::Ground;
+
 };
 
 double Boots::getFull_race_time( int race_distance) {
@@ -30,4 +32,6 @@ double Boots::getFull_race_time( int race_distance) {
 	return full_race_time;
 }
 
-std::string Boots::getRace_name() { return name; };
+std::string Boots::getRace_name() { return name; }
+
+Vehicles_type Boots::getRace_type() { return v_type; }

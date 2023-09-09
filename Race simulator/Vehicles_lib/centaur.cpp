@@ -8,6 +8,7 @@ Centaur::Centaur()
 	speed = 15;
 	mooving_time = 8;
 	resting_time = 0;
+	v_type = Vehicles_type::Ground;
 };
 
 double Centaur::getFull_race_time(int race_distance) {
@@ -25,4 +26,6 @@ double Centaur::getFull_race_time(int race_distance) {
 	return full_race_time;
 }
 
-std::string Centaur::getRace_name() { return name; };
+std::string Centaur::getRace_name() { return name; }
+
+Vehicles_type Centaur::getRace_type() { return v_type; }

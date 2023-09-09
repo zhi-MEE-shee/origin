@@ -9,6 +9,14 @@
 #include<iostream>
 #include<Windows.h>
 
+struct race {
+
+	std::string name;
+	double result{ 0.0 };
+};
+
+
+
 void print_main_menu() {
 	std::cout << "1. Гонка для наземного транспорта" << std::endl
 			  << "2. Гонка для воздушного транспорта" << std::endl
@@ -28,33 +36,34 @@ int race_aprooving() {
 		return tmp;
 }
 
+Vehicles** create_race (int& race_type, int& size, std::string& name, Vehicles_type& type) {
 
-
-double* create_race (int& choosing_race, int& size, std::string& name) {
-
-	switch (choosing_race) {
-		case 1: 
-			size = 4;
-			name = "Гонка для наземного транспорта. ";
-			break;
-		case 2:
-			size = 3; 
-			name = "Гонка для воздушного транспорта. ";
-			break;
-		case 3: 
-			size = 7; 
-			name = "Гонка для наземного и воздушного транспорта. ";
-			break;
+	switch (race_type) {
+	case 1: {
+		size = 4;
+		name = "Гонка для наземного транспорта. ";
+		type = Vehicles_type::Ground;
+		break; }
+	case 2: {
+		size = 3;
+		name = "Гонка для воздушного транспорта. ";
+		type = Vehicles_type::Air;
+		break; }
+	case 3: {
+		size = 7;
+		name = "Гонка для наземного и воздушного транспорта. ";
+		break; }
 	}
-	double* tmp = new double [size] {};
 		
-	return tmp;
+	return new Vehicles* [size] {};
 }
 
-void delete_racers_names (std::string* race_members) {
-	delete[] race_members;
-}
-void delete_race(double* race) {
+void delete_race(Vehicles** race, const int& size) {
+
+	for (int i = 0; i < size; ++i) {
+		delete race[i];
+	}
+
 	delete[] race;
 }
 
@@ -71,111 +80,79 @@ int distance_aprooving() {
 	}
 }
 
-bool isRegistered(std::string* race_members, std::string* vehicles_names, int& last_picked, int& vehicles_count) {
+void print_rMembers(Vehicles** race_members, const int& vehicles_count) {
+	if (vehicles_count >= 1) {
+		std::cout << "Успешно зарегистрированные транспортные средства: ";
+		for (int i = 0; i < vehicles_count; ++i) {
+			std::cout << race_members[i]->getRace_name() << " ";
+		}
+		std::cout << std::endl;
+	}
+}
+
+bool isRegistered(Vehicles** all_vehicles, Vehicles** race_members, const int& last_picked, int& vehicles_count) {
 
 	if (vehicles_count >= 1) {
 		for (int i = 0; i < vehicles_count; ++i) {
-			if (race_members[i] == vehicles_names[last_picked]) {
-				std::cout << "Транспортное средство (" << race_members[i] << ") уже зарегистрировано!" << std::endl;
-				return true;
+			 
+			if (race_members[i] != all_vehicles[last_picked - 1]) {
+					continue;
 			}
+			else
+				std::cout << "Транспортное средство (" << race_members[i]->getRace_name() << ") " <<
+				"не может быть зарегистрировано повторно!" << std::endl;
+				return true;
+			
 		}
 	}
 	return false;
 }
 
+void registration(Vehicles** all_vehicles, Vehicles** race_members, const int& last_picked, int& vehicles_count, const int& size) {
+	
+	switch (last_picked) {
+		case 1: {
+			race_members[vehicles_count] = all_vehicles[0]; break;
+		}
+		case 2: {
+			race_members[vehicles_count] = all_vehicles[1]; break;
+		}
+		case 3: {
+			race_members[vehicles_count] = all_vehicles[2]; break;
+		}
+		case 4: {
+			race_members[vehicles_count] = all_vehicles[3]; break;
+		}
+		case 5: {
+			race_members[vehicles_count] = all_vehicles[4]; break;
+		}
+		case 6: {
+			race_members[vehicles_count] = all_vehicles[5]; break;
+		}
+		case 7: {
+			race_members[vehicles_count] = all_vehicles[6]; break;
+		}
+	}
 
-
-
-void check_last_picked(double* race, std::string* race_members, int& last_picked, int& vehicles_count,
-					const int& choosing_race, const int& race_distance) {
+	std::cout << "Транспортное средство (" << race_members[vehicles_count]->getRace_name() << ") успешно зарегистрировано!" << std::endl;
+	if (vehicles_count <= size) {
+		++vehicles_count;
+	}
 	
 
-	if (choosing_race == 1) {
-		if (last_picked == 1) {
-			Boots* boots = new Boots();
-			race_members[vehicles_count] = boots->getRace_name();
-			race[vehicles_count] = boots->getFull_race_time(race_distance);
-
-			std::cout << "Транспортное средство (" << race_members[vehicles_count] << ") успешно зарегистрировано!" << std::endl;
-			++vehicles_count;
-		}
-		else if (last_picked == 3) {
-			Camel* camel = new Camel();
-			race_members[vehicles_count] = camel->getRace_name();
-			race[vehicles_count] = camel ->getFull_race_time(race_distance);
-
-			std::cout << "Транспортное средство (" << race_members[vehicles_count] << ") успешно зарегистрировано!" << std::endl;
-			++vehicles_count;
-		}
-		else if (last_picked == 4) {
-			Centaur* centaur = new Centaur();
-			race_members[vehicles_count] = centaur->getRace_name();
-			race[vehicles_count] = centaur->getFull_race_time(race_distance);
-
-			std::cout << "Транспортное средство (" << race_members[vehicles_count] << ") успешно зарегистрировано!" << std::endl;
-			++vehicles_count;
-		}
-		else if (last_picked == 6) {
-			Speed_camel* sCamel = new Speed_camel();                               // oh my, poor scamel!
-			race_members[vehicles_count] = sCamel->getRace_name();
-			race[vehicles_count] = sCamel->getFull_race_time(race_distance);
-
-			std::cout << "Транспортное средство (" << race_members[vehicles_count] << ") успешно зарегистрировано!" << std::endl;
-			++vehicles_count;
-		}
-		else {
-			std::cout << "Попытка зарегистрировать неподходящий тип транспортного средства!" << std::endl;
-		}
-			
-	}
-	else if (choosing_race == 2) {
-		if (last_picked == 2) {
-			Broom* broom = new Broom();
-			race_members[vehicles_count] = broom->getRace_name();
-			race[vehicles_count] = broom->getFull_race_time(race_distance);
-
-			std::cout << "Транспортное средство (" << race_members[vehicles_count] << ") успешно зарегистрировано!" << std::endl;
-			++vehicles_count;
-		}
-		else if (last_picked == 5) {
-			Eagle* eagle = new Eagle();
-			race_members[vehicles_count] = eagle->getRace_name();
-			race[vehicles_count] = eagle->getFull_race_time(race_distance);	
-
-			std::cout << "Транспортное средство (" << race_members[vehicles_count] << ") успешно зарегистрировано!" << std::endl;
-			++vehicles_count;
-		}
-		else if (last_picked == 7) {
-			Carpet* carpet = new Carpet();
-			race_members[vehicles_count] = carpet->getRace_name();
-			race[vehicles_count] = carpet->getFull_race_time(race_distance);
-
-
-			std::cout << "Транспортное средство (" << race_members[vehicles_count] << ") успешно зарегистрировано!" << std::endl;
-			++vehicles_count;
-		}
-		else {
-			std::cout << "Попытка зарегистрировать неподходящий тип транспортного средства!" << std::endl;
-		}
-		
-	}
 }
 	
 
-void sorting(double* race, std::string* race_members, const int& vehicles_count) {
+void sorting(struct race* racer, const int& vehicles_count) {
 
 
 	for (int i = 0; i < vehicles_count; ++i) {
 		for (int j = vehicles_count - 1; j >= 0 ; j--) {
-			if (race[j] > race[j - 1]) {
-				double tmp = race[j];
-				race[j] = race[j + 1];
-				race[j + 1] = tmp;
+			if (racer[j].result > racer[j - 1].result) {
 
-				std::string sTmp = race_members[j];
-				race_members[j] = race_members[j - 1];
-				race_members[j + 1] = sTmp;
+				race tmp = racer[j];
+				racer[j] = racer[j - 1];
+				racer[j - 1] = tmp;
 
 			}
 		}
@@ -189,22 +166,30 @@ int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	//массив для вывода в меню
-	std::string* vehicles_names = new std::string[8]{ "non", "Ботинки - вездеходы",
-													  "Метла", "Верблюд", "Кентавр",
-													  "Орёл", "Верблюд-быстроход",
-													  "Ковёр-самолёт" };
-
-
+	//массив для вывода меню
+	const int m_size = { 7 };
+	Vehicles** all_vehicles = new Vehicles* [m_size] {};
+	all_vehicles[0] = new Boots();
+	all_vehicles[1] = new Broom();
+	all_vehicles[2] = new Camel();
+	all_vehicles[3] = new Centaur();
+	all_vehicles[4] = new Eagle();
+	all_vehicles[5] = new Speed_camel();
+	all_vehicles[6] = new Carpet();
+	
+	
 	std::cout << "Добро пожаловать в гоночный симулятор!" << std::endl;
+
 	int exit{ 0 };
 	while (exit != 2) {
 
-		int choosing_race{ race_aprooving() };
+
+		Vehicles_type type;
+		int race_type{ race_aprooving() };
 		int size{ 0 };
 		std::string race_name;
-		double* race{ create_race(choosing_race, size, race_name) };
-		std::string* race_members = new std::string[size]{};
+		Vehicles** race_members{ create_race(race_type, size, race_name, type) };
+		
 
 		int race_distance{ distance_aprooving() };
 		system("cls");
@@ -225,31 +210,37 @@ int main() {
 			std::cin >> mode;
 
 
-			if (mode < 1 && mode > 2) {
-				std::cout << "Указанного действия нет в меню." << std::endl;
-			}
-			else if (mode == 1) {
+			switch (mode) {
+				case 1: {
 
-				system("cls");
-				std::cout << race_name << "Растояние: " << race_distance << std::endl;
+					system("cls");
+					std::cout << race_name << "Растояние: " << race_distance << std::endl;
 
-				if (vehicles_count >= 1) {
-					std::cout << "Успешно зарегистрированные транспортные средства: ";
-					for (int i = 0; i < vehicles_count; ++i) {
-						std::cout << race_members[i] << " ";
-					}
-					std::cout << std::endl;
-				}
-				//вывод всех возможных транспортных средств
-				for (int i = 1; i < 8; ++i) {
-					std::cout << i << ". " << vehicles_names[i] << std::endl;
-				}
-				std::cout << "0. Закончить регистрацию\n";
-				std::cout << "Выберите транспорт или 0 для окончания регистрации: ";
-				std::cin >> last_picked;
-				if (last_picked != 0) {
-					if (!isRegistered(race_members, vehicles_names, last_picked, vehicles_count)) {
-						check_last_picked(race, race_members, last_picked, vehicles_count, choosing_race, race_distance);
+					print_rMembers(race_members, vehicles_count);
+					
+					//вывод всех возможных транспортных средств
+						for (int i = 0; i < m_size; ++i) {
+							std::cout << i + 1 << ". " << all_vehicles[i]->getRace_name() << std::endl;
+						}
+					std::cout << "0. Закончить регистрацию\n";
+					std::cout << "Выберите транспорт или 0 для окончания регистрации: ";
+					std::cin >> last_picked;
+					if (last_picked != 0) {
+						if (!isRegistered(all_vehicles, race_members, last_picked, vehicles_count)) {
+
+							Vehicles_type checked_type;
+							checked_type = all_vehicles[last_picked - 1]->getRace_type();
+
+							if (race_type == 3) {
+								registration(all_vehicles, race_members, last_picked, vehicles_count, size);
+							}
+							else if (type == checked_type) {
+								registration(all_vehicles, race_members, last_picked, vehicles_count, size);
+							}
+							else {
+								std::cout << "Попытка зарегистрировать неподходящий тип транспортного средства!" << std::endl;
+							}
+						}
 						if (vehicles_count == size) {
 							std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 							std::cout << "Пам пам пам! Все участники заняли свои места, а потому мы принудительно переходим к началу гонок!" << std::endl;
@@ -257,37 +248,49 @@ int main() {
 							mode = 2;
 						}
 					}
+					else if (last_picked == 0) {
+						if (vehicles_count < 2) {
+							std::cout << "Участников гонки недостаточно! Перейдите в меню регистрации транспорта." << std::endl;
+							break;
+						}
+						else {
+							mode = 2;
+						}
+					}
+					break;
 				}
-				else if (last_picked == 0){
+				case 2:{
 					if (vehicles_count < 2) {
 						std::cout << "Участников гонки недостаточно! Перейдите в меню регистрации транспорта." << std::endl;
+						mode = 0;
 						break;
 					}
-					else {
-						mode = 2;
-					}
-				}
-
+					else break;
+				  }
+				default: {
+					std::cout << "Указанного действия нет в меню." << std::endl; break; }
 			}
-			if (mode == 2) {
-				if (vehicles_count < 2) {
-					std::cout << "Участников гонки недостаточно! Перейдите в меню регистрации транспорта." << std::endl;
-					mode = 0;
-				}
-				else {
-					sorting(race, race_members, vehicles_count);
-				}
-			}
+			
 
 		} while (mode != 2);
+
+	// создаем структуру для подсчета результатов
+		struct race* racer = new race[vehicles_count]{};
+		
+			for (int i = 0; i < vehicles_count; ++i) {
+				racer[i].name = race_members[i]->getRace_name();
+				racer[i].result = race_members[i]->getFull_race_time(race_distance);
+			}
+
+		sorting(racer, vehicles_count);
 
 		system("cls");
 		std::cout << "Результаты гонки: " << std::endl;
 
 		for (int i = 0; i < vehicles_count; ++i) {
-			std::cout << i + 1 << ". " << race_members[i] << ". Время: " << race[i] << std::endl;
+			std::cout << i + 1 << ". " << racer[i].name << ". Время: " << racer[i].result << std::endl;
 		}
-
+		
 
 		std::cout << std::endl 
 			<< 1 << ". Провести ещё одну гонку" << std::endl
@@ -295,20 +298,15 @@ int main() {
 
 		std::cin >> exit;
 
-		delete[] race;
-		delete[] race_members;
+		delete_race(race_members, vehicles_count);
+		delete[] racer;
 		size = 0;
 		race_name = {};
 	}
 
+
+	delete_race(all_vehicles, m_size);
 	return 0;
 }
 
-
-/*
-
-/*
-
-
-*/
 

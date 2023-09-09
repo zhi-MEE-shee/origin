@@ -12,4 +12,6 @@ public:
 	virtual double getReduction_factor (int& distance);
 
 	std::string getRace_name() override;
+
+	Vehicles_type getRace_type() override;
 };

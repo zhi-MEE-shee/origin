@@ -8,6 +8,7 @@ Camel::Camel()
 	speed = 10;
 	mooving_time = 30;
 	resting_time = 0;
+	v_type = Vehicles_type::Ground;
 };
 
 double Camel::getFull_race_time(int race_distance) {
@@ -30,4 +31,6 @@ double Camel::getFull_race_time(int race_distance) {
 	return full_race_time;
 }
 
-std::string Camel::getRace_name() { return name; };
+std::string Camel::getRace_name() { return name; }
+
+Vehicles_type Camel::getRace_type() { return v_type; }

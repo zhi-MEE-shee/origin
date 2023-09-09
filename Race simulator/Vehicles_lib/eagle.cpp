@@ -7,7 +7,7 @@ Eagle::Eagle()
 {
 	name = getName();
 	speed = 8;
-
+	v_type = Vehicles_type::Air;
 };
 
 double Eagle::getFull_race_time (int race_distance) {
@@ -24,3 +24,5 @@ double Eagle::getReduction_factor (int& distance) {
 }
 
 std::string Eagle::getRace_name() { return name; };
+
+Vehicles_type Eagle::getRace_type() { return v_type; }
