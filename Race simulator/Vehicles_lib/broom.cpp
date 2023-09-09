@@ -10,6 +10,8 @@ Broom::Broom()
 	v_type = Vehicles_type::Air;
 };
 
+Broom::~Broom() {};
+
 double Broom::getFull_race_time (int race_distance) {
 
 	double distance = race_distance * getReduction_factor(race_distance);

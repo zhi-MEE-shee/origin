@@ -63,7 +63,6 @@ void delete_race(Vehicles** race, const int& size) {
 	for (int i = 0; i < size; ++i) {
 		delete race[i];
 	}
-
 	delete[] race;
 }
 
@@ -147,12 +146,12 @@ void sorting(struct race* racer, const int& vehicles_count) {
 
 
 	for (int i = 0; i < vehicles_count; ++i) {
-		for (int j = vehicles_count - 1; j >= 0 ; j--) {
-			if (racer[j].result > racer[j - 1].result) {
-
+		for (int j = 0; j < vehicles_count - i - 1; j++) {
+			if (racer[j].result > racer[j + 1].result) {
+				
 				race tmp = racer[j];
-				racer[j] = racer[j - 1];
-				racer[j - 1] = tmp;
+				racer[j] = racer[j + 1];
+				racer[j + 1] = tmp;
 
 			}
 		}
@@ -161,7 +160,7 @@ void sorting(struct race* racer, const int& vehicles_count) {
 
 
 int main() {
-
+	
 	setlocale(LC_ALL, "Russian");
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -242,9 +241,9 @@ int main() {
 							}
 						}
 						if (vehicles_count == size) {
-							std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-							std::cout << "ѕам пам пам! ¬се участники зан€ли свои места, а потому мы принудительно переходим к началу гонок!" << std::endl;
 							std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+							std::cout << "ѕам пам пам! ¬се участники зан€ли свои места, а потому мы принудительно переходим к началу гонок!" << std::endl;
+							std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 							mode = 2;
 						}
 					}
@@ -259,13 +258,17 @@ int main() {
 					}
 					break;
 				}
-				case 2:{
+				case 2: {
 					if (vehicles_count < 2) {
 						std::cout << "”частников гонки недостаточно! ѕерейдите в меню регистрации транспорта." << std::endl;
 						mode = 0;
 						break;
 					}
-					else break;
+					else { 
+						std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+						std::cout << "3... 2... 1... √онка началась!" << std::endl;
+						std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+						break; }
 				  }
 				default: {
 					std::cout << "”казанного действи€ нет в меню." << std::endl; break; }
@@ -301,7 +304,9 @@ int main() {
 		delete_race(race_members, vehicles_count);
 		delete[] racer;
 		size = 0;
+		vehicles_count = 0;
 		race_name = {};
+		system("cls");
 	}
 
 

@@ -9,6 +9,8 @@ protected:
 	std::string getName() override;
 	
 public:
+	~Earth_vehicles() override;
+
 	double getFull_race_time(int race_distance) override;
 
 	std::string getRace_name() override;

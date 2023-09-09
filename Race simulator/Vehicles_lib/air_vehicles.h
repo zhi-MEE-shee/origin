@@ -8,6 +8,9 @@ protected:
 	std::string getName() override;
 
 public:
+
+	~Air_vehicles() override;
+
 	double getFull_race_time(int race_distance) override;
 	virtual double getReduction_factor (int& distance);
 

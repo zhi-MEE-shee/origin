@@ -1,5 +1,7 @@
 #include "vehicles.h"
 
+Vehicles::~Vehicles() {};
+
 std::string Vehicles::getName() { return "Гонка"; }
 
 double Vehicles::getFull_race_time(int race_distance) { return 0; }

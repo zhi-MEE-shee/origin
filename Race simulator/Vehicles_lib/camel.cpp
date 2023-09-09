@@ -11,6 +11,8 @@ Camel::Camel()
 	v_type = Vehicles_type::Ground;
 };
 
+Camel::~Camel() {};
+
 double Camel::getFull_race_time(int race_distance) {
 
 	double time = static_cast<double>(race_distance / speed);

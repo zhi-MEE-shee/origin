@@ -9,6 +9,8 @@ protected:
 public:
 	Centaur();
 
+	~Centaur() override;
+
 	double getFull_race_time(int race_distance) override;
 
 	std::string getRace_name() override;

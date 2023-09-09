@@ -10,6 +10,8 @@ Carpet::Carpet()
 	v_type = Vehicles_type::Air;
 };
 
+Carpet::~Carpet() {};
+
 double Carpet::getFull_race_time (int race_distance) {
 
 	double distance = race_distance * getReduction_factor(race_distance);

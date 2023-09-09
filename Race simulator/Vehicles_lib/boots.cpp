@@ -12,6 +12,8 @@ Boots::Boots()
 
 };
 
+Boots::~Boots() {};
+
 double Boots::getFull_race_time( int race_distance) {
 
 	double time = static_cast<double>(race_distance / speed);

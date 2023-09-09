@@ -11,6 +11,8 @@ Centaur::Centaur()
 	v_type = Vehicles_type::Ground;
 };
 
+Centaur::~Centaur() {};
+
 double Centaur::getFull_race_time(int race_distance) {
 
 	double time = static_cast<double>(race_distance / speed);

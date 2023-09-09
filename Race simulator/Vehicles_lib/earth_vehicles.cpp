@@ -1,4 +1,5 @@
 #include "earth_vehicles.h"
+Earth_vehicles::~Earth_vehicles() {};
 
 std::string Earth_vehicles::getName() { return "Наземный транспорт"; }
 

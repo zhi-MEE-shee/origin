@@ -10,6 +10,9 @@ protected:
 public:
 
 	Carpet();
+
+	~Carpet() override;
+
 	double getFull_race_time (int race_distance) override;
 	double getReduction_factor (int& distance) override;
 
