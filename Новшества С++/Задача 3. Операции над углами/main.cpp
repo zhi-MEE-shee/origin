@@ -19,15 +19,18 @@ int main() {
 	std::cout << "[Выходные данные]: ";
 	std::cout << std::endl;
 
-	std::string f_name1;
-	std::string f_name2;
+	std::string f_name;
+
 
 	std::function <void(double)> func;
-	func = [f_name1 = "sin", f_name2 = "cos"](double i) mutable { std::cout << f_name1 << ": " << (f_name1 == "sin" ? sin(i) : (sin(i) / cos(i)) ) << ' '
-																            << f_name2 << ": " << (f_name2 == "cos" ? cos(i) : (cos(i) / sin(i)) ) << ' '; };
-
 	std::vector <std::function<void(double)>> functions;
+
+	func = [f_name = "sin"](double i) mutable { std::cout << f_name << ": " << sin(i) << ' '; };
 	functions.push_back(func);
+
+	func = [f_name = "cos"](double i) mutable { std::cout << f_name << ": " <<  cos(i) << ' '; };
+	functions.push_back(func);
+
 	
 
 	for (const auto& angle : angles) {
