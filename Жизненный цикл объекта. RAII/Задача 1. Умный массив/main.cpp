@@ -11,13 +11,16 @@ public:
 		ptr = new int [size] { 0 };
 	}
 
+	smart_array(const smart_array&) = delete;                // запрещаем конструктор копирования
+	smart_array& operator= (const smart_array&) = delete;    // удаляем оператор присваивания
+
 	~smart_array() {
 	//	std::cout << "smart_array delited";
 		delete[] ptr;
 	}
 
 	int get_element(int num) { 
-		if (num < 0 || num>= size) {
+		if (num < 0 || num >= was_written) {
 			throw std::exception("index isn't valid");
 		}
 		else

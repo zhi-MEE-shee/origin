@@ -10,7 +10,7 @@ public:
 
 		ptr = new int [size] { 0 };
 	}
-/*
+
 	smart_array(const smart_array& new_arr) {
 		size = new_arr.size;
 		was_written = new_arr.was_written;
@@ -20,7 +20,7 @@ public:
 		{
 			ptr[i] = new_arr.ptr[i];
 		}
-	}*/
+	}
 
 	~smart_array() {
 	//	std::cout << "smart_array delited" << std::endl;
@@ -28,7 +28,7 @@ public:
 	}
 
 	int get_element(int num) {
-		if (num < 0 || num >= size) {
+		if (num < 0 || num >= was_written) {
 			throw std::exception("index isn't valid");
 		}
 		else
@@ -48,15 +48,17 @@ public:
 	
 	smart_array& operator= (const smart_array& array)
 	{
-		size = array.size;
-		was_written = array.was_written;
-		ptr = new int[size];
+		if (this != &array) {                  
+			size = array.size;
+			was_written = array.was_written;
+			ptr = new int[size];
 
-		for (int i = 0; i < size; i++)
-		{
-			ptr[i] = array.ptr[i];
+			for (int i = 0; i < size; i++)
+			{
+				ptr[i] = array.ptr[i];
+			}
+			return *this;
 		}
-		return *this;
 	}
 
 };
