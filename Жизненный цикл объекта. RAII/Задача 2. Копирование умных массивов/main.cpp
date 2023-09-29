@@ -29,7 +29,7 @@ public:
 
 	int get_element(int num) {
 		if (num < 0 || num >= was_written) {
-			throw std::exception("index isn't valid");
+			throw std::runtime_error("index isn't valid");
 		}
 		else
 			return ptr[num];
@@ -37,7 +37,7 @@ public:
 
 	void add_element(int num) {
 		if (was_written == size) {
-			throw std::exception("array is full");
+			throw std::runtime_error("array is full");
 		}
 		else {
 			ptr[was_written] = num;
@@ -57,8 +57,8 @@ public:
 			{
 				ptr[i] = array.ptr[i];
 			}
-			return *this;
 		}
+		return *this;
 	}
 
 };
