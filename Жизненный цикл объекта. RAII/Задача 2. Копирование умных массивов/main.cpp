@@ -57,6 +57,7 @@ public:
 			{
 				ptr[i] = array.ptr[i];
 			}
+			return *this;
 		}
 		return *this;
 	}
