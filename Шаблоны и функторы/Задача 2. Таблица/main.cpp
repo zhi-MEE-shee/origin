@@ -20,9 +20,10 @@ public:
 			delete[] matrix[i];
 		}
 		delete[] matrix;
+
 	}
 // перегрузка для записи
-	int* operator[] (T i) {
+	T* operator[] (T i) {
 		return matrix[i];
 	}
 	
@@ -30,11 +31,15 @@ public:
 // если закомментировать, то код работает так же
 // потому не понимаю для чего const int& operator[] (T i) const необходим
 
-	const int& operator[] (T i) const {
+	const T* operator[] (T i) const {
 		return matrix[i];
 	}
 };
-
+//
+//void print(const Matrix<int>& m)
+//{
+//	std::cout << m[0][0];
+//}
 
 int main() {
 
@@ -42,7 +47,9 @@ int main() {
 	test[0][1] = 4;
 	test[1][2] = 9;
 	std::cout << test[0][1] << std::endl;
-	std::cout << test[1][2];
+	std::cout << test[1][2] << std::endl;
+
+//	print(test);
 }
 
 
