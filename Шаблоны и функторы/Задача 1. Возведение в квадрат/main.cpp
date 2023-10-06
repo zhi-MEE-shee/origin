@@ -9,7 +9,10 @@ T power(T& a) {
 
 template<typename T>
 T power(std::vector<T>& arr) {
-	return arr * arr;
+	for (auto& it : arr) {
+		it *= it;
+	}
+	return arr;
 }
 
 int main() {
@@ -29,6 +32,7 @@ int main() {
 	for (const auto& it : arr) {
 		std::cout << power(it) << ' ';
 	}
+
 
 	return 0;
 }
