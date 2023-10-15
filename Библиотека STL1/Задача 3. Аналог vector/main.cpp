@@ -22,6 +22,32 @@ public:
 		delete[]ptr;
 	}
 
+	MyVector(const MyVector& other) {
+		this->current = other.current;
+		this->cap = other.cap;
+		ptr = new T[cap];
+
+		for (unsigned int i = 0; i < current; i++) {
+			ptr[i] = other.ptr[i];
+		}
+	};
+
+	MyVector& operator=(const MyVector& other) {
+		if (&other == this) {
+			return *this;
+		}
+		delete[]this->ptr;
+		this->current = other.current;
+		this->cap = other.cap;
+		ptr = new T[cap];
+
+		for (unsigned int i = 0; i < current; i++) {
+			ptr[i] = other.ptr[i];
+		}
+		return *this;
+	};
+
+
 	T at(int pos) {
 		if (pos >= current) {
 			throw std::out_of_range( "Invalid index" );
@@ -60,5 +86,7 @@ int main() {
 	my.push_back(1);
 	my.push_back(6);
 	std::cout << my.at(1) << ' ' << my.size() << ' ' << my.capacity() << std::endl;
-	
+	MyVector<int>my2(10);
+
+	return 0;
 }
