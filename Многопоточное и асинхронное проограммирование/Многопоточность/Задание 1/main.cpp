@@ -3,8 +3,7 @@
 
 using namespace std::chrono_literals;
 
-thread_local int q = 0;
-
+int q = 0;
 
 void client_count() {
 
@@ -16,11 +15,12 @@ void client_count() {
 }
 
 void operator_count() {
-	q = 21;
-	while (q != 1) {
-		std::this_thread::sleep_for(120ms);
-		q--;
-		std::cout << "operator: " << q << std::endl;
+	
+	while (q >= 0) {
+			std::this_thread::sleep_for(120ms);
+			q--;
+			if (q == -1) { break; }
+			std::cout << "operator: " << q << std::endl;
 	}
 }
 
