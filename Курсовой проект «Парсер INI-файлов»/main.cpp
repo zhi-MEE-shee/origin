@@ -33,19 +33,14 @@ public:
 	~ini_parser() {};
 
 	template<typename T>
-	T get_value(const std::string& req_str) {
+	T get_value(const std::string& req_section, const std::string& req_key) {
+
+		T val;
+		std::string str_value;
 		
-		std::string req_section;
-		std::string req_key;
-		T value;
-		size_t dot = req_str.find('.');
-		if (dot != std::string::npos) {
-			req_section = req_str.substr(0, dot);
-			req_key = req_str.substr(dot + 1);
-		}
 		if (auto i = ini.find(req_section); i != ini.end()) {
 			if (auto j = ini.find(req_key); j != ini.end()) {
-				value = ini[req_section][req_key];    
+				str_value = ini[req_section][req_key];
 			}
 			else {
 				std::cout << "Запрашиваемый ключ отсутствует." << std::endl;
@@ -55,8 +50,25 @@ public:
 		else {
 			std::cout << "Запрашиваемая секция отсутствует." << std::endl;
 		}
-		return value;
+		
+
+		if (std::is_same<int, T>::value)
+		{
+			val = std::stoi(str_value);
+		}
+		else if (std::is_same<double, T>::value) {
+			val = std::stod(str_value);
+		}
+		else {
+			val = str_value;
+		}
+
+		return val;
 	}
+
+
+	
+
 
 	void line_reading(std::string& section, const std::string& line) {
 	
@@ -83,11 +95,6 @@ public:
 		}
 	}
 
-
-
-	//T& operator=(const std::string& str) {}
-
-
 };
 
 
@@ -97,9 +104,8 @@ int main() {
 	SetConsoleOutputCP(1251);
 
 	ini_parser parser("to_read.ini");
-	auto value = parser.get_value<double>("Section1.var2");
+	auto value = parser.get_value<double>("Section1", "var2");
 
-	//  возможно нужна функция проверяющая значение value
 	std::cout << "value = " << value << std::endl;
 
 	return 0;
