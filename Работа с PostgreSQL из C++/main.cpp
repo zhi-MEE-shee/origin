@@ -65,7 +65,7 @@ public:
 
 		pqxx::transaction tx{*conn};
 
-		std::string p_id = "INSERT INTO public.phone_number (id, phone) VALUES(DEFAULT, '" + phone + "') RETURNING id;";
+		std::string p_id = "INSERT INTO public.phone_number (id, phone) VALUES(DEFAULT, '" + tx.esc(phone) + "') RETURNING id;";
 		pqxx::result r = tx.exec(p_id);
 		int id{ 0 };
 		if (r.size() == 1) {
@@ -110,7 +110,7 @@ public:
 		auto collection = tx.query <std::string, std::string>("SELECT c.first_name, ph.phone FROM public.client c "
 			"JOIN public.client_phone cp ON c.id = cp.client_id "
 			"JOIN public.phone_number ph ON cp.phone_number_id = ph.id "
-			"WHERE c.last_name = '" + last_name + "' ");
+			"WHERE c.last_name = '" + tx.esc(last_name) + "' ");
 		for (auto& record : collection) {
 			std::string name = std::get<0>(record);
 			std::string phone = std::get<1>(record);
