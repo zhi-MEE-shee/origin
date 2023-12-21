@@ -4,12 +4,10 @@
 #include <sstream>
 #include <Windows.h>
 
-
-
 class ini_parser {
 private:
 	std::string file;
-	//        имя секции,          имя ключа, значение параметра
+	//        РёРјСЏ СЃРµРєС†РёРё,          РёРјСЏ РєР»СЋС‡Р°, Р·РЅР°С‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂР°
 	//std::map<std::string, std::pair<std::string, std::string>> ini;
 
 	typedef std::map<std::string, std::string> inner_map;
@@ -29,7 +27,7 @@ public:
 			std::string section;
 			std::string line;
 			while (std::getline(file, line)) {
-				line_reading(line, section);
+				line_reading(section, line);
 			}
 
 			file.close();
@@ -51,7 +49,7 @@ public:
 		for (outer_map::iterator it = ini.begin(); it != ini.end(); ++it)
 		{
 			inner_map& innerMap = it->second;
-			std::cout << "Outer " << it->first << "\n";
+			std::cout << it->first << "\n";
 			for (inner_map::iterator jt = innerMap.begin(); jt != innerMap.end(); ++jt)
 			{
 				std::cout << "    " << jt->first << ":" << jt->second << "\n";
@@ -71,11 +69,11 @@ public:
 				str_value = j->second;
 			}
 			else {
-				std::cout << "Запрашиваемый ключ отсутствует." << std::endl;
+				std::cout << "Р—Р°РїСЂР°С€РёРІР°РµРјС‹Р№ РєР»СЋС‡ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚." << std::endl;
 			}
 		}
 		else {
-			std::cout << "Запрашиваемая секция отсутствует." << std::endl;
+			std::cout << "Р—Р°РїСЂР°С€РёРІР°РµРјР°СЏ СЃРµРєС†РёСЏ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚." << std::endl;
 		}
 
 		return str_value;
@@ -87,21 +85,27 @@ public:
 		std::string str;
 		ss >> std::ws >> str;
 		if (!str.empty()) { 
-			if (str[0] == '[' && str[str.length() - 1] == ']') {		/// ищем заголовок Section                  
+			if (str[0] == '[' && str[str.length() - 1] == ']') {		/// РёС‰РµРј Р·Р°РіРѕР»РѕРІРѕРє Section                  
 				section = str.substr(1, str.length() - 2);  
 				ini.insert(std::make_pair(section, inner_map()));
 			}
 			else {			
-				size_t comm = str.find(';');						    /// ищем строки коментирования и игнорируем их
+				size_t comm = str.find(';');						    /// РёС‰РµРј СЃС‚СЂРѕРєРё РєРѕРјРµРЅС‚РёСЂРѕРІР°РЅРёСЏ Рё РёРіРЅРѕСЂРёСЂСѓРµРј РёС…
 				if (comm != std::string::npos) {
 					str = str.substr(0, comm);
 				}
-				size_t equal = str.find('=');							/// ищем знак '=' aka идентифицируем что строка содержит отношение ключ=значение
+				size_t equal = str.find('=');							/// РёС‰РµРј Р·РЅР°Рє '=' aka РёРґРµРЅС‚РёС„РёС†РёСЂСѓРµРј С‡С‚Рѕ СЃС‚СЂРѕРєР° СЃРѕРґРµСЂР¶РёС‚ РѕС‚РЅРѕС€РµРЅРёРµ РєР»СЋС‡=Р·РЅР°С‡РµРЅРёРµ
 				if (equal != std::string::npos) {						//
-					std::string key = str.substr(0, equal);				// возвращаем подстроку от pos == 0 до pos == equal 
-					std::string value = str.substr(equal + 1);			// возвращаем подстроку от pos == equal + 1 до pos == size() 
+					std::string key = str.substr(0, equal);	// РІРѕР·РІСЂР°С‰Р°РµРј РїРѕРґСЃС‚СЂРѕРєСѓ РѕС‚ pos == 0 РґРѕ pos == equal 
+					std::string value;
+					if (str.substr(equal + 1).empty()){
+						std::cout << "Р’ " << section << " РєР»СЋС‡ " << key << " СЏРІР»СЏРµС‚СЃСЏ РїСѓСЃС‚РѕР№ СЃС‚СЂРѕРєРѕР№\n";
+						value = "";
+					}
+					else {
+						value = str.substr(equal + 1);
+					}
 					ini[section].insert(std::make_pair(key, value));
-
 				}
 			}
 		}
@@ -118,21 +122,31 @@ std::string ini_parser::get_value(const std::string& req_section, const std::str
 template<>
 int ini_parser::get_value(const std::string& req_section, const std::string& req_key) {
 	std::string str_value = getvaluestring(req_section, req_key);
-	int val = std::stoi(str_value);
+	int val{ 0 };
+	try
+	{
+		val = std::stoi(str_value);
+	}
+	catch (std::exception const& ex)
+	{
+		std::cout << "РЅРµРІРѕР·РјРѕР¶РЅРѕ РїСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ СЃС‚СЂРѕРєСѓ РІ int: " << ex.what() << '\n';
+	}
 	return val;
 }
 
 
 int main() {
 
+	setlocale(LC_ALL, "Russian");
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+	
 
 	ini_parser parser("to_read.ini");
 
 	parser.print();
 
-	auto value = parser.get_value<int>("Section2", "var3");
+	auto value = parser.get_value<int>("Section1", "var1");
 
 	std::cout << "value = " << value << std::endl;
 
