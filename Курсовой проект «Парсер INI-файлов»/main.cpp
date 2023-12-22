@@ -7,9 +7,8 @@
 class ini_parser {
 private:
 	std::string file;
-	//        РёРјСЏ СЃРµРєС†РёРё,          РёРјСЏ РєР»СЋС‡Р°, Р·РЅР°С‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂР°
-	//std::map<std::string, std::pair<std::string, std::string>> ini;
-
+	
+	std::string curr_section;
 	typedef std::map<std::string, std::string> inner_map;
 	typedef std::map<std::string, inner_map> outer_map;
 	outer_map ini;
@@ -24,10 +23,10 @@ public:
 			throw std::runtime_error("Failed to open file");
 		}
 		else {
-			std::string section;
+			
 			std::string line;
 			while (std::getline(file, line)) {
-				line_reading(section, line);
+				line_reading(line);
 			}
 
 			file.close();
@@ -69,48 +68,58 @@ public:
 				str_value = j->second;
 			}
 			else {
-				std::cout << "Р—Р°РїСЂР°С€РёРІР°РµРјС‹Р№ РєР»СЋС‡ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚." << std::endl;
+				std::cout << "Запрашиваемый ключ отсутствует." << std::endl;
 			}
 		}
 		else {
-			std::cout << "Р—Р°РїСЂР°С€РёРІР°РµРјР°СЏ СЃРµРєС†РёСЏ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚." << std::endl;
+			std::cout << "Запрашиваемая секция отсутствует." << std::endl;
 		}
 
 		return str_value;
 	}
 	
-	void line_reading(std::string& section, const std::string& line) {
+	void line_reading(const std::string& line) {
 	
 		std::stringstream ss(line);
 		std::string str;
-		ss >> std::ws >> str;
+		std::getline(ss, str);
 		if (!str.empty()) { 
-			if (str[0] == '[' && str[str.length() - 1] == ']') {		/// РёС‰РµРј Р·Р°РіРѕР»РѕРІРѕРє Section                  
-				section = str.substr(1, str.length() - 2);  
-				ini.insert(std::make_pair(section, inner_map()));
+			if (str[0] == '[' && str[str.length() - 1] == ']') {		/// ищем заголовок Section                  
+				curr_section = str.substr(1, str.length() - 2);  
+				if (auto i = ini.find(curr_section); i != ini.end()) {
+					return;
+				}
+				else 
+					ini.insert(std::make_pair(curr_section, inner_map()));
 			}
 			else {			
-				size_t comm = str.find(';');						    /// РёС‰РµРј СЃС‚СЂРѕРєРё РєРѕРјРµРЅС‚РёСЂРѕРІР°РЅРёСЏ Рё РёРіРЅРѕСЂРёСЂСѓРµРј РёС…
+				size_t comm = str.find(';');						    /// ищем строки коментирования и игнорируем их
 				if (comm != std::string::npos) {
 					str = str.substr(0, comm);
 				}
-				size_t equal = str.find('=');							/// РёС‰РµРј Р·РЅР°Рє '=' aka РёРґРµРЅС‚РёС„РёС†РёСЂСѓРµРј С‡С‚Рѕ СЃС‚СЂРѕРєР° СЃРѕРґРµСЂР¶РёС‚ РѕС‚РЅРѕС€РµРЅРёРµ РєР»СЋС‡=Р·РЅР°С‡РµРЅРёРµ
+				size_t equal = str.find('=');							/// ищем знак '=' aka идентифицируем что строка содержит отношение ключ=значение
 				if (equal != std::string::npos) {						//
-					std::string key = str.substr(0, equal);	// РІРѕР·РІСЂР°С‰Р°РµРј РїРѕРґСЃС‚СЂРѕРєСѓ РѕС‚ pos == 0 РґРѕ pos == equal 
+					std::string key = str.substr(0, equal);				// возвращаем подстроку от pos == 0 до pos == equal 
 					std::string value;
-					if (str.substr(equal + 1).empty()){
-						std::cout << "Р’ " << section << " РєР»СЋС‡ " << key << " СЏРІР»СЏРµС‚СЃСЏ РїСѓСЃС‚РѕР№ СЃС‚СЂРѕРєРѕР№\n";
+					if (str.substr((equal + 1), str.size()).empty()){
+						std::cout << "В " << curr_section << " ключ " << key << " является пустой строкой\n";
 						value = "";
 					}
 					else {
-						value = str.substr(equal + 1);
+						value = str.substr((equal + 1), str.size());
 					}
-					ini[section].insert(std::make_pair(key, value));
+					if (auto i = ini.find(curr_section); i != ini.end()) {
+						if (auto j = i->second.find(key); j != i->second.end()) {
+							ini[curr_section].insert_or_assign(key, value);
+						}
+						else {
+							ini[curr_section].insert(std::make_pair(key, value));
+						}
+					}
 				}
 			}
 		}
 	}
-
 };
 
 
@@ -122,33 +131,35 @@ std::string ini_parser::get_value(const std::string& req_section, const std::str
 template<>
 int ini_parser::get_value(const std::string& req_section, const std::string& req_key) {
 	std::string str_value = getvaluestring(req_section, req_key);
-	int val{ 0 };
-	try
-	{
-		val = std::stoi(str_value);
-	}
-	catch (std::exception const& ex)
-	{
-		std::cout << "РЅРµРІРѕР·РјРѕР¶РЅРѕ РїСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ СЃС‚СЂРѕРєСѓ РІ int: " << ex.what() << '\n';
-	}
+	int val = std::stoi(str_value);
+	return val;
+}
+
+template<>
+double ini_parser::get_value(const std::string& req_section, const std::string& req_key) {
+	std::string str_value = getvaluestring(req_section, req_key);
+	double val = std::stod(str_value);
 	return val;
 }
 
 
 int main() {
 
-	setlocale(LC_ALL, "Russian");
+	
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	
 
 	ini_parser parser("to_read.ini");
 
 	parser.print();
-
-	auto value = parser.get_value<int>("Section1", "var1");
-
-	std::cout << "value = " << value << std::endl;
+	try {
+		auto value = parser.get_value<double>("Section1", "var1");
+		std::cout << "value = " << value << std::endl;
+		
+	}
+	catch (std::invalid_argument const& ex) {
+		std::cout << "Невозможно преобразовать строку: " << ex.what() << std::endl;
+	}
 
 	return 0;
 }
