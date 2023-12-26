@@ -68,11 +68,11 @@ public:
 				str_value = j->second;
 			}
 			else {
-				std::cout << "Запрашиваемый ключ отсутствует." << std::endl;
+				throw std::exception("запрашиваемый ключ отсутствует");
 			}
 		}
 		else {
-			std::cout << "Запрашиваемая секция отсутствует." << std::endl;
+			throw std::exception("запрашиваемая секция отсутствует");
 		}
 
 		return str_value;
@@ -145,20 +145,24 @@ double ini_parser::get_value(const std::string& req_section, const std::string& 
 
 int main() {
 
-	
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-
-	ini_parser parser("to_read.ini");
-
-	parser.print();
+	
 	try {
+		ini_parser parser("to_read.ini");
+		//parser.print();
 		auto value = parser.get_value<double>("Section1", "var1");
 		std::cout << "value = " << value << std::endl;
 		
 	}
-	catch (std::invalid_argument const& ex) {
-		std::cout << "Невозможно преобразовать строку: " << ex.what() << std::endl;
+	catch (std::invalid_argument const& ia) {
+		std::cout << "Невозможно преобразовать строку: " << ia.what() << std::endl;
+	}
+	catch (std::runtime_error const& re) {
+		std::cout << "Ошибка чтения файла: " << re.what() << std::endl;
+	}
+	catch (std::exception const& ex) {
+		std::cout << "Ошибка: " << ex.what() << std::endl;
 	}
 
 	return 0;
