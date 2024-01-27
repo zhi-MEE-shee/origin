@@ -57,14 +57,16 @@ public:
 
 class Link : public DecoratedText {
 public:
-    explicit Link(Text* text2) :  DecoratedText(text2) {}
-    void render(const std::string& link, const std::string& data) const {
+    explicit Link(Text* text2, const std::string& link) :  DecoratedText(text2), link_(link) {}
+    void render(const std::string& data) const {
         std::cout << "<a href=\"";
-        text_->render(link);
+        text_->render(link_);
         std::cout << "\">";
         text_->render(data);
         std::cout << "</a>";
     }
+private:
+    std::string link_;
 };
 
 
@@ -76,8 +78,8 @@ int main() {
     auto text_block2 = new Reverse(new Text());
     text_block2->render("Hello world");
     std::cout << "\n";
-    auto text_block3 = new Link(new Text());
-    text_block3->render("netology.ru", "Hello world");
+    auto text_block3 = new Link(new Text(), "netology.ru");
+    text_block3->render("Hello world");
 
     return 0;
 }
