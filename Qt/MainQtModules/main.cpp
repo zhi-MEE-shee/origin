@@ -1,14 +1,10 @@
-#include "mainwindow.h"
-
-#include <QApplication>
+#include <QCoreApplication>
 #include <QSqlDatabase>
 #include <QTcpSocket>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    QCoreApplication a(argc, argv);
 
     QTcpSocket newTcpSocket;
     newTcpSocket.connectToHost("localhost", 2323);
