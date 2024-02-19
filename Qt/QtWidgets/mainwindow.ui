@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tW_main">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Основное окно</string>
+       </attribute>
+       <widget class="QProgressBar" name="pBar_toggButtonCounter">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>190</y>
+          <width>551</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pB_toggButton">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>136</x>
+          <y>270</y>
+          <width>341</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Настройки</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0" colspan="2">
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Настройки отображения</string>
+          </property>
+          <widget class="QLabel" name="label_2">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>30</y>
+             <width>151</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Выбор языка</string>
+           </property>
+          </widget>
+          <widget class="QComboBox" name="cB_language">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>50</y>
+             <width>231</width>
+             <height>22</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="cB_smth">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>90</y>
+             <width>200</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Настройка чего-нибудь</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="cB_smthElse">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>120</y>
+             <width>200</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Настрока чего-нибудь другого</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="checkBox">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>150</y>
+             <width>200</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Настройка третьего</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Цветовая тема</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <widget class="QRadioButton" name="rB_lightGrey">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>30</y>
+             <width>100</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>светло-серая</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="rB_darkGrey">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>60</y>
+             <width>100</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>темно-серая</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="rB_Green">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>90</y>
+             <width>100</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>синяя</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="title">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>640</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
