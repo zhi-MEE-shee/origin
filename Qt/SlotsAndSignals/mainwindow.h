@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QTimer>
 //#include <QTime>
+#include <QString>
 #include "stopwatch.h"
 
 
@@ -27,15 +28,11 @@ public slots:
 
 private slots:
     void on_pB_start_clicked();
-
     void on_pB_cirle_clicked();
 
 private:
     Ui::MainWindow *ui;
     Stopwatch *sig;
-    QTimer *timer;
 
-    int h, min, sec, ms;
-    int circles;
 };
 #endif // MAINWINDOW_H
