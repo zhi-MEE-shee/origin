@@ -1,83 +1,57 @@
 #include "stopwatch.h"
+#include <QTimer>
 
 Stopwatch::Stopwatch(QObject *parent)
     : QObject{parent}
 {
-    counter = false;
-    h = 0;
-    min = 0;
-    sec = 0;
-    ms = 0;
-    circles = 0;
+    circleTime = 0;
+    circle = 1;
+    time.setHMS(0, 0, 0, 0);
+    offTime.setHMS(0, 0, 0, 0);
 
     timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &Stopwatch::SendStart);
-    timer->start(1);
+    timer->setInterval(100);
+    connect(timer, &QTimer::timeout, this, &Stopwatch::getTime);
 }
 Stopwatch::~Stopwatch(){
-
+    delete timer;
 }
 
-bool Stopwatch::isCounting()
+void Stopwatch::getTime()
 {
-    return counter;
+   time =time.addMSecs(100);
+   currentTimeStr = time.toString("mm:ss.z");
+   emit sig_UpdateTime(currentTimeStr);
 }
 
-void Stopwatch::setCounter(bool new_counter)
-{
-    counter = new_counter;
+void Stopwatch::receiveTime(){
+    circleTime = offTime.secsTo(time);
+    circleTimeStr = "Круг " + QString::number(circle) + " , время: " + QString::number(circleTime) + " сек";
+    offTime = time;
+    ++circle;
 }
 
-QString Stopwatch::getTime()
+void Stopwatch::receiveEraseTime()
 {
-    ms++;
-    if (ms >= 1000){
-        ms = 0;
-        sec++;
-    }
-    if (sec >= 60){
-        sec = 0;
-        min++;
-    }
-    return QString(QString::number(min) + ":" + QString::number(sec) + "." + QString::number(ms/10));
-    //TO DO: как-то вернуть строку
-}
-
-
-
-void Stopwatch::SendStop()
-{
-    counter = false;
-    emit sig_StopWatch();
+    time.setHMS(0, 0, 0, 0);
+    offTime.setHMS(0, 0, 0, 0);
+    circle = 1;
 }
 
 void Stopwatch::SendStart()
 {
-   counter = true;
-   emit sig_StartWatch();
+   timer->start();
+   getTime();
 }
 
-void Stopwatch::SendRestart()
+void Stopwatch::SendStop()
 {
-    counter = true;
-    emit sig_RestartWatch();
+   timer->stop();
 }
 
 
-void Stopwatch::SendErase()
-{
-    h = 0;
-    min = 0;
-    sec = 0;
-    ms = 0;
-    circles = 0;
 
-}
 
-void Stopwatch::TimeDiff()
-{
-    // fullTile - prevTime
-}
 
 
 

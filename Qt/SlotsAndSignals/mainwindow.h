@@ -3,9 +3,6 @@
 
 #include <QDebug>
 #include <QMainWindow>
-#include <QTimer>
-//#include <QTime>
-#include <QString>
 #include "stopwatch.h"
 
 
@@ -21,14 +18,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
-    void ShowTime();
-    void ReceiveStartStop();
-    void on_pB_erase_clicked();
+signals:
+ //   void ShowTime();
+    void sig_circleTime();
+    void sig_clearTime();
 
 private slots:
+    void ReceiveStartStop(QString str);
     void on_pB_start_clicked();
     void on_pB_cirle_clicked();
+    void on_pB_erase_clicked();
 
 private:
     Ui::MainWindow *ui;

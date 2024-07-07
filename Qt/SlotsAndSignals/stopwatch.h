@@ -4,42 +4,41 @@
 #include <QObject>
 #include <QTimer>
 #include <QString>
-//#include <QTime>
+#include <QTime>
 
 class Stopwatch : public QObject
 {
     Q_OBJECT
 public:
-    bool counter;
-    int h, min, sec, ms;
-    int circles;
-    int fullTile;
-    int prevTime;
-    QTimer *timer;
+
+    QString currentTimeStr;
+    QString circleTimeStr;
 
     explicit Stopwatch(QObject *parent = nullptr);
     ~Stopwatch();
 
-    bool isCounting();
-    void setCounter(bool new_counter);
-    QString getTime();
+    void getTime();
+    void SendStart();
+    void SendStop();
 
 public slots:
-    void SendStart();
-    void SendRestart();
-    void SendStop();
-    void SendErase();
-    void TimeDiff();
 
+    void receiveTime();
+    void receiveEraseTime();
 
 signals:
-    void sig_RestartWatch();
-    void sig_StartWatch();
-    void sig_StopWatch();
-    void sig_Erase();
+    void sig_UpdateTime(QString &currentTimeStr);
 
 private:
-  //  QTime *time;
+    int circleTime;
+    int circle;
+    QTimer *timer;
+    QTime time;
+    QTime offTime;
+
+
+    //    int fullTile;
+    //    int prevTime;
 
 };
 
